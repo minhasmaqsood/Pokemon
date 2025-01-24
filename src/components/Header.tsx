@@ -1,19 +1,52 @@
-import React from 'react';
-import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function PokemonDetailsScreen({route}: any) {
-  const {id} = route.params;
+// Define navigation type
+type RootStackParamList = {
+  PokemonDetails: { id: string }; 
+};
 
-  return <View style={styles.container}></View>;
-}
+type HeaderProps = {
+  title: string;
+  showBackButton: boolean;
+};
+
+const Header: React.FC<HeaderProps> = ({ title, showBackButton }) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  return (
+    <View style={styles.header}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        {showBackButton ?<Text style={styles.backText}>{"<"}</Text> : <></>}
+      </TouchableOpacity>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 15,
+    backgroundColor: "#f8f9fa",
   },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 15,
+  backButton: {
+    marginRight: 10,
+  },
+  backText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#007bff",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+    alignSelf: 'center'
   },
 });
+
+export default Header;

@@ -6,7 +6,12 @@ import {store} from '../store/index';
 import PokemonListScreen from '../screens/PokemonMainScreen';
 import PokemonDetailsScreen from '../screens/PokemonDetailScreen';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  PokemonList: undefined;
+  PokemonDetails: { id: number };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
